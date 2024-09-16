@@ -15,8 +15,10 @@ struct NoteListView: View {
     var notes: FetchedResults<Note>
     
     @State private var showShareSheet = false
+    @State private var showEditNoteSheet = false
     @State private var searchText = ""
     @State private var sharedNote: Note?
+    @State private var selectedNote: Note?
 
     let palette = Image(systemName: "list.bullet.circle")
         .symbolRenderingMode(.multicolor)
@@ -35,6 +37,15 @@ struct NoteListView: View {
                                 .font(.title3)
                         }
                         .swipeActions(allowsFullSwipe: false) {
+                            Button {
+                                self.selectedNote = Note(context: managedObjectContext)
+                                self.selectedNote = note
+                                showEditNoteSheet = true
+                            } label: {
+                                Label("Edit", systemImage: "square.and.pencil")
+                            }
+                            .tint(.indigo)
+
                             Button {
                                 self.sharedNote = note
                                 self.showShareSheet = true
@@ -59,6 +70,15 @@ struct NoteListView: View {
             }
             .sheet(isPresented: $showShareSheet, content: {
                 ShareSheet(activityItems: [sharedNote?.message as Any])
+            })
+            .fullScreenCover(isPresented: $showEditNoteSheet, content: {
+                if let title = selectedNote?.title, let message = selectedNote?.message {
+                    EditNoteView(
+                        noteTitle: title,
+                        noteMessageText: message,
+                        note: selectedNote
+                    )
+                }
             })
             .navigationTitle("Notes")
             .toolbar {
