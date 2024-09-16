@@ -16,6 +16,7 @@ struct NoteListView: View {
     
     @State private var showShareSheet = false
     @State private var searchText = ""
+    @State private var sharedNote: Note?
 
     let palette = Image(systemName: "list.bullet.circle")
         .symbolRenderingMode(.multicolor)
@@ -34,6 +35,14 @@ struct NoteListView: View {
                                 .font(.title3)
                         }
                         .swipeActions(allowsFullSwipe: false) {
+                            Button {
+                                self.sharedNote = note
+                                self.showShareSheet = true
+                            } label: {
+                                Label("Share", systemImage: "square.and.arrow.up")
+                            }
+                            .tint(.purple)
+
                             Button(role: .destructive) {
                                 deleteNote(note)
                             } label: {
@@ -48,6 +57,9 @@ struct NoteListView: View {
             .onChange(of: searchText) { _, newValue in
                 notes.nsPredicate = newValue.isEmpty ? nil : NSPredicate(format: "title CONTAINS %@", newValue)
             }
+            .sheet(isPresented: $showShareSheet, content: {
+                ShareSheet(activityItems: [sharedNote?.message as Any])
+            })
             .navigationTitle("Notes")
             .toolbar {
                 NavigationLink(destination: AddNewNoteView()) {
