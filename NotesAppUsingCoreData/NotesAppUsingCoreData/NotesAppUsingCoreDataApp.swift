@@ -12,7 +12,7 @@ var persistentContainer: NSPersistentContainer = {
     let container = NSPersistentContainer(name: "Notes")
     container.loadPersistentStores { _, error in
         if let error = error as NSError? {
-            fatalError("Unresolved error \(error), \(error.userInfo)")
+            preconditionFailure("Unresolved error \(error), \(error.userInfo)")
         }
     }
     return container
