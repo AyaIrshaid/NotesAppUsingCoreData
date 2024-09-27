@@ -10,12 +10,9 @@ import SwiftUI
 
 struct NoteListView: View {
     @Environment(\.managedObjectContext) var managedObjectContext
-    @FetchRequest(entity: Note.entity(),
-                  sortDescriptors: [NSSortDescriptor(keyPath: \Note.creationDate, ascending: false)])
-    var notes: FetchedResults<Note>
+    @StateObject var noteListModel: NoteListModel
     
     @State private var showShareSheet = false
-    @State private var showEditNoteSheet = false
     @State private var searchText = ""
     @State private var sharedNote: Note?
     @State private var selectedNote: Note?
@@ -26,8 +23,13 @@ struct NoteListView: View {
     var body: some View {
         NavigationView {
             List {
-                ForEach(notes, id: \.id) { note in
-                    NavigationLink(destination: NoteDetailsView(noteTtile: note.title ?? "", noteMessage: note.message ?? "")) {
+                ForEach(noteListModel.notes, id: \.id) { note in
+                    NavigationLink(destination:
+                                    EditNoteView(
+                                        noteTitle: note.title ?? "",
+                                        noteMessageText: note.message ?? "",
+                                        note: note
+                                    )) {
                         VStack(alignment: .leading) {
                             Text("\(Text(palette)) \(note.title ?? "")")
                                 .foregroundColor(.blue)
@@ -38,16 +40,7 @@ struct NoteListView: View {
                         }
                         .swipeActions(allowsFullSwipe: false) {
                             Button {
-                                self.selectedNote = Note(context: managedObjectContext)
-                                self.selectedNote = note
-                                showEditNoteSheet = true
-                            } label: {
-                                Label("Edit", systemImage: "square.and.pencil")
-                            }
-                            .tint(.indigo)
-
-                            Button {
-                                self.sharedNote = note
+                                sharedNote = note
                                 self.showShareSheet = true
                             } label: {
                                 Label("Share", systemImage: "square.and.arrow.up")
@@ -55,7 +48,7 @@ struct NoteListView: View {
                             .tint(.purple)
 
                             Button(role: .destructive) {
-                                deleteNote(note)
+                                noteListModel.deleteNote(note)
                             } label: {
                                 Label("Delete", systemImage: "trash.fill")
                             }
@@ -66,19 +59,10 @@ struct NoteListView: View {
             }
             .searchable(text: $searchText)
             .onChange(of: searchText) { _, newValue in
-                notes.nsPredicate = newValue.isEmpty ? nil : NSPredicate(format: "title CONTAINS %@", newValue)
+                noteListModel.searchForNote(with: newValue)
             }
             .sheet(isPresented: $showShareSheet, content: {
                 ShareSheet(activityItems: [sharedNote?.message as Any])
-            })
-            .fullScreenCover(isPresented: $showEditNoteSheet, content: {
-                if let title = selectedNote?.title, let message = selectedNote?.message {
-                    EditNoteView(
-                        noteTitle: title,
-                        noteMessageText: message,
-                        note: selectedNote
-                    )
-                }
             })
             .navigationTitle("Notes")
             .toolbar {
@@ -86,25 +70,13 @@ struct NoteListView: View {
                     Label("", systemImage: "plus")
                 }
             }
-        }
-    }
-}
-
-private extension NoteListView {
-    func deleteNote(_ note: Note) {
-        managedObjectContext.delete(note)
-        saveContext()
-    }
-
-    func saveContext() {
-        do {
-            try managedObjectContext.save()
-        } catch {
-            print("Error saving managed object context: \(error)")
+            .task {
+                noteListModel.fetchNotes()
+            }
         }
     }
 }
 
 #Preview {
-    NoteListView()
+    NoteListView(noteListModel: NoteListModel(persistentContainer.viewContext))
 }

@@ -24,7 +24,8 @@ struct NotesAppUsingCoreDataApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NoteListView().environment(\.managedObjectContext, context)
+            let noteListModel = NoteListModel(context)
+            NoteListView(noteListModel: noteListModel).environment(\.managedObjectContext, context)
         }
     }
 }
