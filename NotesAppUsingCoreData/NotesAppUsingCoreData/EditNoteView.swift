@@ -14,25 +14,44 @@ struct EditNoteView: View {
     @State var noteTitle: String = ""
     @State var noteMessageText: String = ""
     @State var note: Note?
+    @State var isEditModeEnabled: Bool = false
     
     var body: some View {
         VStack(alignment: .leading
         ) {
-            Text("Title:")
-            TextEditor(text: $noteTitle)
-                .foregroundStyle(.secondary)
-                .frame(height: 50)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10.0)
-                        .stroke(.gray, lineWidth: 1.0)
-                )
-            Text("Message:")
-            TextEditor(text: $noteMessageText)
-                .foregroundStyle(.secondary)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10.0)
-                        .stroke(.gray, lineWidth: 1.0)
-                )
+            editView()
+                .disabled(!isEditModeEnabled)
+            Spacer()
+        }
+        .padding(.horizontal, 24.0)
+        .background {
+            Color.white
+        }
+        .toolbar {
+            Button("Edit") {
+                isEditModeEnabled = true
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func editView() -> some View {
+        Text("Title:")
+        TextEditor(text: $noteTitle)
+            .foregroundStyle(.secondary)
+            .frame(height: 50)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10.0)
+                    .stroke(.gray, lineWidth: 1.0)
+            )
+        Text("Message:")
+        TextEditor(text: $noteMessageText)
+            .foregroundStyle(.secondary)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10.0)
+                    .stroke(.gray, lineWidth: 1.0)
+            )
+        if isEditModeEnabled {
             Button {
                 updateNote(title: noteTitle, messageText: noteMessageText) {
                     dismiss()
@@ -45,11 +64,6 @@ struct EditNoteView: View {
                     .background(.indigo)
                     .cornerRadius(10)
             }
-            Spacer()
-        }
-        .padding(.horizontal, 24.0)
-        .background {
-            Color.white
         }
     }
 }
