@@ -12,11 +12,11 @@
 		265DC3882BCD1413006F2585 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 265DC3872BCD1413006F2585 /* Preview Assets.xcassets */; };
 		265DC3902BCD1637006F2585 /* Notes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 265DC38E2BCD1637006F2585 /* Notes.xcdatamodeld */; };
 		265DC3922BCD175C006F2585 /* NoteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265DC3912BCD175C006F2585 /* NoteListView.swift */; };
-		265DC3942BCD17F7006F2585 /* NoteDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265DC3932BCD17F7006F2585 /* NoteDetailsView.swift */; };
 		265DC3962BCD191C006F2585 /* AddNewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265DC3952BCD191C006F2585 /* AddNewNoteView.swift */; };
 		265DC3992BCD1F36006F2585 /* NewDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 265DC3982BCD1F36006F2585 /* NewDateFormatter.swift */; };
 		9B4983A32C981A0300259E2E /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4983A22C981A0300259E2E /* ShareSheet.swift */; };
 		9B4983A72C98212700259E2E /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4983A62C98212700259E2E /* EditNoteView.swift */; };
+		9BABF1DB2CA7373E007865BE /* NoteListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BABF1DA2CA7373E007865BE /* NoteListModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,11 +26,11 @@
 		265DC3872BCD1413006F2585 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		265DC38F2BCD1637006F2585 /* NotesDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NotesDataModel.xcdatamodel; sourceTree = "<group>"; };
 		265DC3912BCD175C006F2585 /* NoteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListView.swift; sourceTree = "<group>"; };
-		265DC3932BCD17F7006F2585 /* NoteDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailsView.swift; sourceTree = "<group>"; };
 		265DC3952BCD191C006F2585 /* AddNewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewNoteView.swift; sourceTree = "<group>"; };
 		265DC3982BCD1F36006F2585 /* NewDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDateFormatter.swift; sourceTree = "<group>"; };
 		9B4983A22C981A0300259E2E /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		9B4983A62C98212700259E2E /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
+		9BABF1DA2CA7373E007865BE /* NoteListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +66,8 @@
 				265DC3802BCD1412006F2585 /* NotesAppUsingCoreDataApp.swift */,
 				265DC38E2BCD1637006F2585 /* Notes.xcdatamodeld */,
 				265DC3912BCD175C006F2585 /* NoteListView.swift */,
+				9BABF1DA2CA7373E007865BE /* NoteListModel.swift */,
 				265DC3952BCD191C006F2585 /* AddNewNoteView.swift */,
-				265DC3932BCD17F7006F2585 /* NoteDetailsView.swift */,
 				9B4983A62C98212700259E2E /* EditNoteView.swift */,
 				265DC3972BCD1F24006F2585 /* Formatters */,
 				9B4983A12C9819BE00259E2E /* Representables */,
@@ -174,10 +174,10 @@
 				265DC3902BCD1637006F2585 /* Notes.xcdatamodeld in Sources */,
 				265DC3992BCD1F36006F2585 /* NewDateFormatter.swift in Sources */,
 				265DC3922BCD175C006F2585 /* NoteListView.swift in Sources */,
-				265DC3942BCD17F7006F2585 /* NoteDetailsView.swift in Sources */,
 				9B4983A72C98212700259E2E /* EditNoteView.swift in Sources */,
 				265DC3962BCD191C006F2585 /* AddNewNoteView.swift in Sources */,
 				265DC3812BCD1412006F2585 /* NotesAppUsingCoreDataApp.swift in Sources */,
+				9BABF1DB2CA7373E007865BE /* NoteListModel.swift in Sources */,
 				9B4983A32C981A0300259E2E /* ShareSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
