@@ -21,7 +21,7 @@ struct NoteListView: View {
         .symbolRenderingMode(.multicolor)
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(noteListModel.notes, id: \.id) { note in
                     NavigationLink(destination:
@@ -65,11 +65,9 @@ struct NoteListView: View {
                 ShareSheet(activityItems: [sharedNote?.message as Any])
             })
             .navigationTitle("Notes")
-            .toolbar {
-                NavigationLink(destination: AddNewNoteView()) {
-                    Label("", systemImage: "plus")
-                }
-            }
+            .navigationBarItems(trailing: NavigationLink(destination: AddNewNoteView()) {
+                Label("", systemImage: "plus")
+            })
             .task {
                 noteListModel.fetchNotes()
             }
