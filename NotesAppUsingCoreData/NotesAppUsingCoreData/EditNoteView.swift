@@ -28,8 +28,11 @@ struct EditNoteView: View {
             Color.white
         }
         .toolbar {
-            Button("Edit") {
-                isEditModeEnabled = true
+            Button {
+                isEditModeEnabled.toggle()
+            } label: {
+                Image(systemName: isEditModeEnabled ? "pencil" : "pencil.slash")
+                    .contentTransition(.symbolEffect(.replace))
             }
         }
     }
