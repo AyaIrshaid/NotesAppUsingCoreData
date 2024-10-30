@@ -80,6 +80,9 @@ private extension EditNoteView {
     }
 
     func saveContext() {
+        if note?.changedValues().count == 0 {
+            return
+        }
         do {
             try managedObjectContext.save()
         } catch {
