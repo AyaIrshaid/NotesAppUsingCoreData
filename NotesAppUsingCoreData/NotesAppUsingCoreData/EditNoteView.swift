@@ -29,7 +29,9 @@ struct EditNoteView: View {
         }
         .toolbar {
             Button {
-                isEditModeEnabled.toggle()
+                withAnimation {
+                    isEditModeEnabled.toggle()
+                }
             } label: {
                 Image(systemName: isEditModeEnabled ? "pencil" : "pencil.slash")
                     .contentTransition(.symbolEffect(.replace))
@@ -67,6 +69,7 @@ struct EditNoteView: View {
                     .background(.indigo)
                     .cornerRadius(10)
             }
+            .transition(.scale)
         }
     }
 }
