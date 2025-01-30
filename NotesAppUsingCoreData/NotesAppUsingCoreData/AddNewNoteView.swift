@@ -20,7 +20,7 @@ struct AddNewNoteView: View {
             Text("Title:")
             TextEditor(text: $noteTitle)
                 .foregroundStyle(.secondary)
-                .frame(height: 50)
+                .frame(height: 50.0)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10.0)
                         .stroke(.gray, lineWidth: 1.0)
