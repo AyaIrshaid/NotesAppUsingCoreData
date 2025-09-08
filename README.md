@@ -7,4 +7,12 @@
 * CoreData
 
 ## Screenshots
-![List of notes.](./NotesScreenshots/list.png) ![Add note.](./NotesScreenshots/add.png) ![View note.](./NotesScreenshots/view.png) ![Delete note.](./NotesScreenshots/delete.png) ![Search note.](./NotesScreenshots/search.png)
+<img src="./NotesScreenshots/list.png" width="150"> <img src="./NotesScreenshots/add.png" width="150">
+<img src="./NotesScreenshots/view.png" width="150"> <img src="./NotesScreenshots/delete.png" width="150">
+<img src="./NotesScreenshots/search.png" width="150">
+
+## Edit/View Note
+<img src="./NotesScreenshots/edit.mov" width="200">
+
+## New confirmation popup on delete action with dynamic height
+<img src="./NotesScreenshots/note1.png" width="150"> <img src="./NotesScreenshots/note2.png" width="150"> 
