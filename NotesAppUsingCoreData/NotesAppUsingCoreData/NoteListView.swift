@@ -16,6 +16,10 @@ struct NoteListView: View {
     @State private var searchText = ""
     @State private var sharedNote: Note?
     @State private var selectedNote: Note?
+    @State private var shouldShowConfirmDeleteSheet: Bool = false
+    @State private var sheetContentHeight: CGFloat = UIScreen.main.bounds.height
+    @State private var selectedNoteTitle: String?
+    @State private var selectedNoteMessage: String?
 
     let palette = Image(systemName: "list.bullet.circle")
         .symbolRenderingMode(.multicolor)
@@ -47,12 +51,32 @@ struct NoteListView: View {
                             }
                             .tint(.purple)
 
-                            Button(role: .destructive) {
-                                noteListModel.deleteNote(note)
+                            Button {
+                                if !shouldShowConfirmDeleteSheet {
+                                    selectedNoteTitle = note.title ?? ""
+                                    selectedNoteMessage = note.message ?? ""
+                                    shouldShowConfirmDeleteSheet = true
+                                }
                             } label: {
                                 Label("Delete", systemImage: "trash.fill")
                             }
                             .tint(.pink)
+                        }
+                        .sheet(isPresented: $shouldShowConfirmDeleteSheet) {
+                            confirmDelete()
+                                .presentationDetents([.height(sheetContentHeight)])
+                                .presentationCornerRadius(24.0)
+                                .background(
+                                    GeometryReader { geometry in
+                                        Color.clear
+                                            .onAppear {
+                                                sheetContentHeight = geometry.size.height
+                                            }
+                                            .onChange(of: geometry.size.height) { newHeight in
+                                                sheetContentHeight = newHeight
+                                            }
+                                    }
+                                )
                         }
                     }
                 }
@@ -72,6 +96,55 @@ struct NoteListView: View {
                 noteListModel.fetchNotes()
             }
         }
+    }
+}
+
+extension NoteListView {
+    func confirmDelete() -> some View {
+        VStack(spacing: 16.0) {
+            Text("Are you sure you want to delete this note?")
+                .font(.headline)
+                .padding(.top, 24.0)
+            if let text = selectedNoteMessage {
+                Text(text)
+                    .font(.body)
+            }
+            HStack(spacing: 16.0) {
+                Button {
+                    clearSelectedNote()
+                } label: {
+                    Text("Cancel")
+                        .font(.body)
+                        .foregroundColor(Color.white)
+                        .padding(.vertical, 8.0)
+                        .padding(.horizontal, 16.0)
+                }
+                .background(
+                    Color.gray
+                        .cornerRadius(24.0)
+                )
+                Button {
+                    clearSelectedNote()
+                } label: {
+                    Text("Delete")
+                        .font(.body)
+                        .foregroundColor(Color.white)
+                        .padding(.vertical, 8.0)
+                        .padding(.horizontal, 16.0)
+                }
+                .background(
+                    Color.pink
+                        .cornerRadius(24.0)
+                )
+            }
+        }
+        .padding(16.0)
+    }
+
+    private func clearSelectedNote() {
+        selectedNoteTitle = nil
+        selectedNoteMessage = nil
+        self.shouldShowConfirmDeleteSheet = false
     }
 }
 
